@@ -8,12 +8,12 @@ class Minesweeper
   end
 
   def play
-    p @grid
+    @grid.display
     while !game_over?
       print "Enter your option : "
       input = gets.chomp
       process(input)
-      p @grid
+      @grid.display
     end
     p "You won" and return if won?
     p "You lost"

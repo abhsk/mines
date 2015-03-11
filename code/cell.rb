@@ -1,8 +1,8 @@
 class Cell
 
-  attr_reader :x, :y, :mine, :opened
+  attr_reader :opened, :flagged
 
-  def initialize(x,y,mine)
+  def initialize(x, y, mine)
     @x = x
     @y = y
     @mine = mine
@@ -14,8 +14,16 @@ class Cell
     !@mine
   end
 
-  def has_coordinates?(x,y)
+  def has_coordinates?(x, y)
     @x == x && @y == y
+  end
+
+  def display
+    if opened
+      return safe? ? '0' : 'M'
+    else
+      return flagged ? 'F' : '-'
+    end
   end
 
   def flag
@@ -28,18 +36,10 @@ class Cell
   end
 
   def safe_and_opened?
-    safe? && opened?
+    safe? && opened
   end
 
   def mine_and_flagged?
-    flagged? && @mine
-  end
-
-  def opened?
-    @opened
-  end
-
-  def flagged?
-    @flagged
+    flagged && @mine
   end
 end
