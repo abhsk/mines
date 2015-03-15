@@ -54,5 +54,24 @@ context 'won' do
     end
   end
 
+  context 'display' do
+    it 'should display the grid' do
+      input = 'mxx,mxx,mxx'
 
+      grid = Grid.for(input)
+
+      expect(grid.display).to contain_exactly("---", "---", "---")
+    end
+
+    it 'should display the grid' do
+      input = 'xmx,mxx,xmx'
+
+      grid = Grid.for(input)
+      grid.open(0,0)
+      grid.open(1,1)
+      grid.open(2,2)
+
+      expect(grid.display).to contain_exactly("2--", "-3-", "--1")
+    end
+  end
 end

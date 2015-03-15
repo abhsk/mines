@@ -39,12 +39,12 @@ class Grid
   end
 
   def display
-    @size_x.times do |x|
-      @size_y.times do |y|
-        cell = cell_with(x, y)
-        print cell.display
+    @size_x.times.inject([]) do |full_str, x|
+      row = @size_y.times.inject([]) do |row, y|
+        row << display_value_for(x, y)
       end
-      puts ""
+      full_str << row.join
+      full_str
     end
   end
 
@@ -58,5 +58,20 @@ class Grid
 
   def cell_with(x, y)
     @cells.select { |cell| cell.has_coordinates?(x, y) }.first
+  end
+
+  def mines_for(x,y)
+    all_x =[x-1, x, x+1]
+    all_y =[y-1, y, y+1]
+
+    all_x.product(all_y).select do |position|
+      cell = cell_with(position[0], position[1])
+      cell && !cell.safe?
+    end.size
+  end
+
+  def display_value_for(x, y)
+    display_value = cell_with(x, y).display
+    display_value == '0' ? mines_for(x, y) : display_value
   end
 end

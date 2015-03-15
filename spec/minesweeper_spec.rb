@@ -36,4 +36,22 @@ describe Minesweeper do
     expect(minesweeper.won?).to be_truthy
   end
 
+  it 'should return the something' do
+    mine_layout = 'mm,xx'
+    minesweeper = Minesweeper.new(mine_layout)
+
+    expect { minesweeper.display }.to output("--\n--\n").to_stdout
+  end
+
+  it 'should return the something' do
+    mine_layout = 'mm,xx'
+    minesweeper = Minesweeper.new(mine_layout)
+
+    minesweeper.process('o(1,1)')
+    minesweeper.process('o(1,0)')
+    minesweeper.process('f(0,0)')
+
+    expect { minesweeper.display }.to output("F-\n22\n").to_stdout
+  end
+
 end
